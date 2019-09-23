@@ -1,5 +1,7 @@
-window.addEventListener ('DOMContentloaded', function() {
 'use strict';
+
+window.addEventListener ('DOMContentLoaded', function() {
+
 
     let tab = document.querySelectorAll ('.info-header-tab'),
         info = document.querySelector ('.info-header'),
@@ -25,7 +27,7 @@ window.addEventListener ('DOMContentloaded', function() {
         if (target && target.classList.contains ('info-header-tab')) {
             for (let i = 0; i < tab.length; i++) {
                 if (target == tab [i]) {
-                    hideTabContent (o);
+                    hideTabContent (0);
                     showTabContent (i);
                     break;
                 }
