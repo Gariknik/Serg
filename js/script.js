@@ -73,20 +73,75 @@ window.addEventListener ('DOMContentLoaded', function() {
     }
     // навешивание обработчика событий
 
-    prev.onclick = function () {
+    prev.addEventListener ('click', function () {
         plusSlides (-1);
-    }
+    });
 
-    next.onclick = function () {
+    next.addEventListener ('click', function () {
         plusSlides (1);
-    }
+    });
 
-    sliderDots.onclick = function (e) {
+    sliderDots.addEventListener ('click', function (e) {
         for (let i = 0; i < dotSlider.length + 1; i++) {
             if (e.target.classList. contains ('dot') && e.target == dotSlider [i - 1]) {
                 currentSlides (i);
             }
         }
+    });
+
+    // Таймер
+    let deadline = '2019-10-21';
+    
+    // получаем остаток часов минут секунд
+
+    function getTimeRemaining (endtime) {
+        let t = Date.parse(endtime) - Date.parse (new Date()),
+        seconds = Math.floor ((t/1000) % 60),
+        minutes = Math.floor ((t/1000/60) % 60),
+        hours = Math.floor ((t/(1000*60*60)));
+// создаём объект 
+        return {
+            'total': t,
+            'hours' : hours,
+            'minutes' : minutes,
+            'seconds' : seconds 
+       };
     }
+
+    // Берём из вёрстки блок timer
+
+    function setClock (id , endtime) {
+        let timer = document.getElementById (id),
+            hours = timer.querySelector ('.hours'),
+            minutes = timer.querySelector ('.minutes'),
+            seconds = timer.querySelector ('.seconds'),
+            timeInterval = setInterval (updateClock, 1000);// обновляем функцию каждую секунду
+
+    
+        function updateClock() {
+            let t = getTimeRemaining(endtime);
+
+            // добавляем ноль к числу от 0 до 9
+
+            function zeroNum (a){
+                if(a <= 9) {
+                    return '0' + a;
+                    } else return a;
+                };
+
+                hours.textContent = zeroNum(t.hours);
+                minutes.textContent = zeroNum(t.minutes);
+                seconds.textContent = zeroNum(t.seconds);
+
+            if (t.total <= 0) {
+                clearInterval (timeInterval);
+                hours.textContent = '00';
+                minutes.textContent = '00';
+                seconds.textContent = '00';
+            }
+        }
+    }
+
+    setClock ('timer', deadline);
 });
 
