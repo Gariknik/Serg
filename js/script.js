@@ -143,5 +143,34 @@ window.addEventListener ('DOMContentLoaded', function() {
     }
 
     setClock ('timer', deadline);
-});
 
+    // Модальное окно
+    let more = document.querySelector ('.more'),
+        overlay = document.querySelector ('.overlay'),
+        close = document.querySelector ('.popup-close');
+
+    // открыть окно при нажатии на кнопку 
+    more.addEventListener ('click', function() {
+        overlay.style.display='block';
+        this.classList.add ('more-splash');
+        document.body.style.overflow = 'hidden'; //остановить прокрутку страницы на фоне
+    })
+
+    // закрыть окно при нажатии на крестик 
+    close.addEventListener ('click', function() {
+        overlay.style.display='none';
+        more.classList.remove ('more-splash');
+        document.body.style.overflow = ''; //убрать блок прокрутки
+    });
+
+    // Вызов модальных окон в табах
+
+    let descriptionBtn = document.querySelectorAll('.description-btn');
+
+    descriptionBtn.forEach(element => {
+        element.addEventListener('click', () => {
+            overlay.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+});
